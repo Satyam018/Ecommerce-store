@@ -20,27 +20,27 @@ public class ProductControllers {
 
 
 
-    @GetMapping("products")
+    @GetMapping()
     public ResponseEntity<List<Product>> getProducts(){
             return productServices.getAllProducts();
     }
 
-    @GetMapping("products/{id}")
+    @GetMapping("{id}")
     public ResponseEntity<Product> getProductById(@PathVariable Integer id){
         return productServices.getProductById(id);
     }
 
-    @PutMapping("products")
+    @PutMapping("add")
     public ResponseEntity<String> addProducts(@RequestBody ProductDTO productDTO){
         return productServices.addProducts(productDTO);
     }
 
-    @DeleteMapping("product/{id}")
+    @DeleteMapping("delete/{id}")
     public ResponseEntity<String> deleteProduct(@RequestBody Integer id){
         return productServices.deleteProducts(id);
     }
 
-    @PutMapping("product/{id}")
+    @PutMapping("update/{id}")
     public ResponseEntity<Product> updateProduct(@PathVariable Integer id,@RequestBody ProductDTO productDTO){
         return productServices.updateProduct(id,productDTO);
     }
