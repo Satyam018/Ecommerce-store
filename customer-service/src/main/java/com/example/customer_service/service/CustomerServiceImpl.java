@@ -34,8 +34,8 @@ public class CustomerServiceImpl implements CustomerService{
     @Override
     public ResponseEntity<String> addCustomer(CustomerDTO customerDTO) {
         Customer customer=new Customer();
-        customer.setFirst_name(customerDTO.getFirst_name());
-        customer.setLast_name(customerDTO.getLast_name());
+        customer.setFirst_name(customerDTO.getFirstName());
+        customer.setLast_name(customerDTO.getLastName());
         customer.setEmail(customerDTO.getEmail());
         customer.setPassword(customerDTO.getPassword());
         customer.setPhoneNo(customerDTO.getPhoneNo());
@@ -48,11 +48,12 @@ public class CustomerServiceImpl implements CustomerService{
         Optional<Customer> customer=customerRepository.findById(id);
         if(customer.isEmpty())throw new IllegalArgumentException("Customer does not Exists!");
         Customer updatedCustomer=customer.get();
-        if(!customerDTO.getFirst_name().isEmpty())updatedCustomer.setFirst_name(customerDTO.getFirst_name());
-        if(!customerDTO.getLast_name().isEmpty())updatedCustomer.setLast_name(customerDTO.getLast_name());
-        if(!customerDTO.getEmail().isEmpty())updatedCustomer.setEmail(customerDTO.getEmail());
-        if(!customerDTO.getPassword().isEmpty())updatedCustomer.setPassword(customerDTO.getPassword());
-        if(!customerDTO.getPhoneNo().isEmpty())updatedCustomer.setPhoneNo(customerDTO.getPhoneNo());
+        System.out.println(customerDTO.getFirstName()+" "+customerDTO.getLastName());
+        if(customerDTO.getFirstName()!=null && customerDTO.getFirstName().isEmpty())updatedCustomer.setFirst_name(customerDTO.getFirstName());
+        if(customerDTO.getLastName()!=null && !customerDTO.getLastName().isEmpty())updatedCustomer.setLast_name(customerDTO.getLastName());
+        if(customerDTO.getEmail()!=null && !customerDTO.getEmail().isEmpty())updatedCustomer.setEmail(customerDTO.getEmail());
+        if(customerDTO.getPassword()!=null && !customerDTO.getPassword().isEmpty())updatedCustomer.setPassword(customerDTO.getPassword());
+        if(customerDTO.getPhoneNo()!=null && !customerDTO.getPhoneNo().isEmpty())updatedCustomer.setPhoneNo(customerDTO.getPhoneNo());
 
         customerRepository.save(updatedCustomer);
         return new ResponseEntity<>(updatedCustomer,HttpStatus.OK);

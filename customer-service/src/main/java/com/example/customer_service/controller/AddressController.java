@@ -2,6 +2,7 @@ package com.example.customer_service.controller;
 
 import com.example.customer_service.entity.Address;
 import com.example.customer_service.entity.AddressDTO;
+import com.example.customer_service.entity.DeleteAddressDTO;
 import com.example.customer_service.entity.UpdateAddressDTO;
 import com.example.customer_service.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,23 +19,22 @@ public class AddressController {
     AddressService addressService;
 
     @PutMapping("add")
-    public ResponseEntity<String> addAddress(@RequestBody AddressDTO addressDTO){
+    public ResponseEntity<String> addAddress(@RequestBody AddressDTO addressDTO) {
         return addressService.addAddress(addressDTO);
     }
 
     @GetMapping("{customerid}")
-    public ResponseEntity<List<Address>> getAllAddress(@PathVariable(name = "customerid") int customerId){
-        return addressService.getAllAdress(customerId);
+    public ResponseEntity<List<Address>> getAllAddress(@PathVariable(name = "customerid") int customerId) {
+        return addressService.getAllAddress(customerId);
     }
 
-    @DeleteMapping("deleteaddress/customer/{customerId}/address/{addressId}")
-    public ResponseEntity<String> deleteAddressForCustomer(@PathVariable int customerId,
-                                                           @PathVariable int addressId){
-        return addressService.deleteAddressForCustomer(customerId,addressId);
+    @DeleteMapping("deleteaddress")
+    public ResponseEntity<String> deleteAddressForCustomer(@RequestBody DeleteAddressDTO deleteAddressDTO) {
+        return addressService.deleteAddressForCustomer(deleteAddressDTO.getCustomerId(), deleteAddressDTO.getAddressId());
     }
 
     @PutMapping("updateaddress")
-    public ResponseEntity<Address> updateAddress(@RequestBody UpdateAddressDTO updateAddressDTO){
+    public ResponseEntity<Address> updateAddress(@RequestBody UpdateAddressDTO updateAddressDTO) {
         return addressService.updateAddress(updateAddressDTO);
     }
 
