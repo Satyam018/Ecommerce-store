@@ -42,10 +42,10 @@ public class ProductServicesImpl implements ProductServices {
         if (productDTO.getQuantity() < 0||productDTO.getPrice()<=0) throw new IllegalArgumentException("Quantity cannot be negative");
         Product product = new Product();
         product.setName(productDTO.getName());
-        product.setDescription(product.getDescription());
-        product.setPrice(product.getPrice());
-        product.setQuantity(product.getQuantity());
-        product.setCategory(product.getCategory());
+        product.setDescription(productDTO.getDescription());
+        product.setPrice(productDTO.getPrice());
+        product.setQuantity(productDTO.getQuantity());
+        product.setCategory(productDTO.getCategory());
         product.setAvailablitiyStatus(true);
 
         productRepository.save(product);
@@ -66,10 +66,10 @@ public class ProductServicesImpl implements ProductServices {
         Optional<Product> product=productRepository.findById(id);
         if(product.isEmpty()) throw  new IllegalArgumentException("Product cannot be updated");
         Product updatedProduct=product.get();
-        if(!productDTO.getName().isEmpty())updatedProduct.setName(productDTO.getName());
-        if(!productDTO.getDescription().isEmpty())updatedProduct.setDescription(productDTO.getDescription());
-        if(productDTO.getPrice()<=0)updatedProduct.setPrice(productDTO.getPrice());
-        if(!productDTO.getCategory().isEmpty())updatedProduct.setCategory(productDTO.getCategory());
+        if(productDTO.getName()!=null && !productDTO.getName().isEmpty())updatedProduct.setName(productDTO.getName());
+        if(productDTO.getDescription()!=null && !productDTO.getDescription().isEmpty())updatedProduct.setDescription(productDTO.getDescription());
+        if(productDTO.getPrice()>0)updatedProduct.setPrice(productDTO.getPrice());
+        if(productDTO.getCategory()!=null && !productDTO.getCategory().isEmpty())updatedProduct.setCategory(productDTO.getCategory());
         if(productDTO.getQuantity()>=0)updatedProduct.setQuantity(productDTO.getQuantity());
 
         productRepository.save(updatedProduct);
