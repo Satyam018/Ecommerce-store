@@ -20,4 +20,6 @@ public interface ProductServices {
     ResponseEntity<String> deleteProducts(Integer id);
 
     ResponseEntity<Product> updateProduct(Integer id, ProductDTO productDTO);
+
+    ResponseEntity<Boolean> hasProduct(int id);
 }

@@ -1,7 +1,5 @@
 package com.example.cart_services.entity;
 
-
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,31 +7,21 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Data
-@Entity
-@Table
 @AllArgsConstructor
 @NoArgsConstructor
-public class CartItem {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+public class AddCartItemsDTO {
+    int cartId;
 
     private int quantity;
-
     private int product_id;
 
-    @ManyToOne
-    @JoinColumn(name = "cart_id", nullable = false)
-    private Cart cart;
-
-
-    public int getId() {
-        return id;
+    public int getCartId() {
+        return cartId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setCartId(int cartId) {
+        this.cartId = cartId;
     }
 
     public int getQuantity() {
@@ -50,13 +38,5 @@ public class CartItem {
 
     public void setProduct_id(int product_id) {
         this.product_id = product_id;
-    }
-
-    public Cart getCart() {
-        return cart;
-    }
-
-    public void setCart(Cart cart) {
-        this.cart = cart;
     }
 }

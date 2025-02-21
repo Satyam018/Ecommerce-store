@@ -18,4 +18,6 @@ public interface CustomerService {
     ResponseEntity<String> addCustomer(CustomerDTO customerDTO);
 
     ResponseEntity<Customer> updateCustomer(int id,CustomerDTO customerDTO);
+
+    ResponseEntity<Boolean> hasCustomer(Integer id);
 }

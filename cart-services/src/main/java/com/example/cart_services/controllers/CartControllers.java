@@ -1,16 +1,15 @@
 package com.example.cart_services.controllers;
 
 
-import com.example.cart_services.entity.Cart;
-import com.example.cart_services.entity.CartItem;
+
+import com.example.cart_services.entity.*;
+import com.example.cart_services.feign.CustomerInterface;
+import com.example.cart_services.feign.ProductInterface;
 import com.example.cart_services.services.CartItemServices;
 import com.example.cart_services.services.CartServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,20 +24,52 @@ public class CartControllers {
     @Autowired
     CartItemServices cartItemServices;
 
-    @GetMapping("customerid/{id}")
-    public ResponseEntity<List<Cart>> getAllCartDetails(@PathVariable int id){
-        return cartServices.getAllCartDetails(id);
+
+
+    @GetMapping()
+    public ResponseEntity<List<Cart>> getAllCartDetails(){
+        return cartServices.getAllCartDetails();
     }
 
-    @GetMapping("customerid/{customerid}/cartid{cartid}")
-    public ResponseEntity<Cart> getCartItem(@PathVariable("customerid") int customerId,
-                                                @PathVariable("cartid") int cartId){
-        return cartServices.getCartItem(customerId,cartId);
+    @GetMapping("customer/{customerid}")
+    public ResponseEntity<Cart> getCart(@PathVariable("customerid") int customerId){
+        return cartServices.getCart(customerId);
 
     }
 
+    @GetMapping("cartdetails/{customerId}")
+    public ResponseEntity<OutputCartInfoDTO> getCartDetailsByCustomerId(@PathVariable int customerId){
+        return cartServices.getCartDetailsByCustomerId(customerId);
+    }
 
+    @GetMapping("cartitem/{id}")
+    public ResponseEntity<CartItem> getCartItem(@PathVariable("id") int cartItemId){
+        return cartItemServices.getCartItemDTO(cartItemId);
+    }
 
+    @PostMapping("addcart/{customerid}")
+    public ResponseEntity<String> createCart(@PathVariable("customerid") int customerId){
+        return cartServices.createCart(customerId);
+    }
+
+    @PostMapping("addcartitem")
+    public ResponseEntity<String> addCartItem(@RequestBody AddCartItemsDTO addCartItemsDTO){
+      return cartItemServices.addCartItem(addCartItemsDTO);
+    }
+    @DeleteMapping("clearcart/{customerId}")
+    public ResponseEntity<String> clearCarts(@PathVariable("id") int customerId ){
+        return cartServices.clearCart(customerId);
+    }
+
+    @DeleteMapping("deleteitem/{cartItemId}")
+    public ResponseEntity<String> deleteItem(@PathVariable int cartItemId){
+        return cartItemServices.deleteItem(cartItemId);
+    }
+
+    @PostMapping("updatecartitem")
+    public ResponseEntity<CartItem> updateCartItem(@RequestBody UpdateCartItemDTO updateCartItemDTO){
+        return cartItemServices.updateCartItem(updateCartItemDTO);
+    }
 
 
 

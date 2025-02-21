@@ -25,12 +25,17 @@ public class ProductControllers {
             return productServices.getAllProducts();
     }
 
+    @GetMapping("hasproduct/{id}")
+    public ResponseEntity<Boolean> hasProduct(@PathVariable int id){
+        return productServices.hasProduct(id);
+    }
+
     @GetMapping("{id}")
     public ResponseEntity<Product> getProductById(@PathVariable Integer id){
         return productServices.getProductById(id);
     }
 
-    @PutMapping("add")
+    @PostMapping("add")
     public ResponseEntity<String> addProducts(@RequestBody ProductDTO productDTO){
         return productServices.addProducts(productDTO);
     }
@@ -40,7 +45,7 @@ public class ProductControllers {
         return productServices.deleteProducts(id);
     }
 
-    @PutMapping("update/{id}")
+    @PostMapping("update/{id}")
     public ResponseEntity<Product> updateProduct(@PathVariable Integer id,@RequestBody ProductDTO productDTO){
         return productServices.updateProduct(id,productDTO);
     }

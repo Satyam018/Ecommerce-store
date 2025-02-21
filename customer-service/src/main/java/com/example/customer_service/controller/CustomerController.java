@@ -28,6 +28,11 @@ public class CustomerController {
         return customerService.getCustomerById(id);
     }
 
+    @GetMapping("hascustomer/{id}")
+    public ResponseEntity<Boolean> hasCustomer(@PathVariable Integer id){
+        return customerService.hasCustomer(id);
+    }
+
     @PutMapping("add")
     public ResponseEntity<String> addNewCustomer(@RequestBody CustomerDTO customerDTO){
         return customerService.addCustomer(customerDTO);

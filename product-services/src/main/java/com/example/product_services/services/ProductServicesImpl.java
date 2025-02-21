@@ -35,6 +35,12 @@ public class ProductServicesImpl implements ProductServices {
         return new ResponseEntity<>(product.get(),HttpStatus.OK);
     }
 
+    @Override
+    public ResponseEntity<Boolean> hasProduct(int id) {
+        boolean hasProduct= productRepository.getProductById(id);
+        return new ResponseEntity<>(hasProduct,HttpStatus.OK);
+    }
+
 
     @Override
     public ResponseEntity<String> addProducts(ProductDTO productDTO) {
@@ -76,4 +82,6 @@ public class ProductServicesImpl implements ProductServices {
 
         return new ResponseEntity<>(updatedProduct,HttpStatus.OK);
     }
+
+
 }

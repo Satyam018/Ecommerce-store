@@ -18,7 +18,7 @@ public class AddressController {
     @Autowired
     AddressService addressService;
 
-    @PutMapping("add")
+    @PostMapping("add")
     public ResponseEntity<String> addAddress(@RequestBody AddressDTO addressDTO) {
         return addressService.addAddress(addressDTO);
     }
@@ -33,7 +33,7 @@ public class AddressController {
         return addressService.deleteAddressForCustomer(deleteAddressDTO.getCustomerId(), deleteAddressDTO.getAddressId());
     }
 
-    @PutMapping("updateaddress")
+    @PostMapping("updateaddress")
     public ResponseEntity<Address> updateAddress(@RequestBody UpdateAddressDTO updateAddressDTO) {
         return addressService.updateAddress(updateAddressDTO);
     }

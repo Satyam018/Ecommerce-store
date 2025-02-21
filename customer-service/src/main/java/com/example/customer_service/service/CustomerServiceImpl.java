@@ -24,11 +24,20 @@ public class CustomerServiceImpl implements CustomerService{
         return new ResponseEntity<>(customers, HttpStatus.OK);
     }
 
+
     @Override
     public ResponseEntity<Customer> getCustomerById(Integer id) {
         Optional<Customer> customer=customerRepository.findById(id);
         if(customer.isEmpty())throw new IllegalArgumentException("Customer does not Exists!");
         return new ResponseEntity<>(customer.get(),HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<Boolean> hasCustomer(Integer id) {
+        Optional<Boolean> customer=customerRepository.findCustomerById(id);
+        if(customer.isEmpty() || !customer.get())return new ResponseEntity<>(Boolean.FALSE,HttpStatus.OK);
+        return new ResponseEntity<>(Boolean.TRUE,HttpStatus.OK);
+
     }
 
     @Override
@@ -59,6 +68,8 @@ public class CustomerServiceImpl implements CustomerService{
         return new ResponseEntity<>(updatedCustomer,HttpStatus.OK);
 
     }
+
+
 
 
 }
