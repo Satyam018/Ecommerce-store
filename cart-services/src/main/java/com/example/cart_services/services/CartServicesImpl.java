@@ -30,9 +30,26 @@ public class CartServicesImpl implements CartServices {
     CustomerInterface customerInterface;
 
     @Override
-    public ResponseEntity<List<Cart>> getAllCartDetails() {
+    public ResponseEntity<List<Cart>> getAllCarts() {
         List<Cart> carts = cartRepository.findAll();
         return new ResponseEntity<>(carts, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<List<OutputCartInfoDTO>> getAllCartDetails() {
+        List<OutputCartInfoDTO> outputCartInfoDTOS=new ArrayList<>();
+        List<Cart> carts=cartRepository.findAll();
+        for (Cart cart:carts){
+            Optional<List<CartItem>> cartItems=cartItemRepository.getAllItemsByCart(cart.getId());
+
+            OutputCartInfoDTO outputCartInfoDTO=new OutputCartInfoDTO();
+            outputCartInfoDTO.setCustomerId(cart.getCustomerId());
+            outputCartInfoDTO.setCartId(cart.getId());
+            if(cartItems.isPresent())outputCartInfoDTO.setCartItems(cartItems.get());
+            else outputCartInfoDTO.setCartItems(new ArrayList<>());
+            outputCartInfoDTOS.add(outputCartInfoDTO);
+        }
+        return new ResponseEntity<>(outputCartInfoDTOS,HttpStatus.OK);
     }
 
     @Override

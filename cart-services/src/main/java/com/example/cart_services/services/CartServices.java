@@ -12,7 +12,9 @@ import java.util.List;
 
 public interface CartServices {
 
-    ResponseEntity<List<Cart>> getAllCartDetails();
+    ResponseEntity<List<Cart>> getAllCarts();
+
+    ResponseEntity<List<OutputCartInfoDTO>> getAllCartDetails();
 
     ResponseEntity<Cart> getCart(int customerId);
 
@@ -21,4 +23,5 @@ public interface CartServices {
     ResponseEntity<String> createCart(int customerId);
 
     ResponseEntity<OutputCartInfoDTO> getCartDetailsByCustomerId(int customerId);
+
 }

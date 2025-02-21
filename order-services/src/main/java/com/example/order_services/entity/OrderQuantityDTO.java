@@ -12,6 +12,30 @@ public class OrderQuantityDTO {
     int orderItemId;
     int newQuantity;
 
+
+    public int getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
+
+    public int getOrderItemId() {
+        return orderItemId;
+    }
+
+    public void setOrderItemId(int orderItemId) {
+        this.orderItemId = orderItemId;
+    }
+
+    public int getNewQuantity() {
+        return newQuantity;
+    }
+
+    public void setNewQuantity(int newQuantity) {
+        this.newQuantity = newQuantity;
+    }
 }
 
 

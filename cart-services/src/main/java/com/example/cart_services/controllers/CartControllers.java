@@ -3,8 +3,6 @@ package com.example.cart_services.controllers;
 
 
 import com.example.cart_services.entity.*;
-import com.example.cart_services.feign.CustomerInterface;
-import com.example.cart_services.feign.ProductInterface;
 import com.example.cart_services.services.CartItemServices;
 import com.example.cart_services.services.CartServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +25,13 @@ public class CartControllers {
 
 
     @GetMapping()
-    public ResponseEntity<List<Cart>> getAllCartDetails(){
+    public ResponseEntity<List<OutputCartInfoDTO>> getAllCartDetails(){
         return cartServices.getAllCartDetails();
+    }
+
+    @GetMapping("allcarts")
+    public ResponseEntity<List<Cart>> getAllCarts(){
+        return cartServices.getAllCarts();
     }
 
     @GetMapping("customer/{customerid}")

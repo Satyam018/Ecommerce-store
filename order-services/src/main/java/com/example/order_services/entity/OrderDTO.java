@@ -13,10 +13,32 @@ import java.util.List;
 public class OrderDTO {
 
 
-    private Double totalPrice;
+
     private int customer;
     private int address;
+    private List<OrderItemDTO> orderItems;
 
-    @OneToMany
-    private List<OrderItem> orderItems;
+    public List<OrderItemDTO> getOrderItems() {
+        return orderItems;
+    }
+
+    public int getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(int customer) {
+        this.customer = customer;
+    }
+
+    public int getAddress() {
+        return address;
+    }
+
+    public void setAddress(int address) {
+        this.address = address;
+    }
+
+    public void setOrderItems(List<OrderItemDTO> orderItems) {
+        this.orderItems = orderItems;
+    }
 }
