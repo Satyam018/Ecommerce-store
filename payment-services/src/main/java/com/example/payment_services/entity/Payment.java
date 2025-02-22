@@ -19,9 +19,6 @@ public class Payment {
     @GeneratedValue
     private int paymentId;
     private int amount;
-
     private String paymentStatus;
-    private String transactionId;
-
     private int orderId;
 }
