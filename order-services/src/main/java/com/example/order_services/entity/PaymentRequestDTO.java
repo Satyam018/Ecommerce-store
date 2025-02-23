@@ -1,4 +1,4 @@
-package com.example.payment_services.entity;
+package com.example.order_services.entity;
 
 
 import lombok.AllArgsConstructor;

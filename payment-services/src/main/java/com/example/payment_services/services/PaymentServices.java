@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 public interface PaymentServices {
 
 
-    ResponseEntity<Payment> makePayment(PaymentRequestDTO paymentRequestDTO);
+    ResponseEntity<Boolean> makePayment(PaymentRequestDTO paymentRequestDTO);
 
     ResponseEntity<Payment> getPaymentByOrderId(int orderid);
 }

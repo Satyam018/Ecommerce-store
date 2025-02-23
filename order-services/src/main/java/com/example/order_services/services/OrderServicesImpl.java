@@ -3,6 +3,9 @@ package com.example.order_services.services;
 import com.example.order_services.dao.OrderItemRepository;
 import com.example.order_services.dao.OrderRepository;
 import com.example.order_services.entity.*;
+import com.example.order_services.feign.PaymentInterface;
+import com.example.order_services.feign.ProductInterface;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +23,12 @@ public class OrderServicesImpl implements OrderServices {
 
     @Autowired
     OrderItemRepository orderItemReository;
+
+    @Autowired
+    ProductInterface productInterface;
+
+    @Autowired
+    PaymentInterface paymentInterface;
 
     @Override
     public ResponseEntity<List<Order1>> getOrders() {
@@ -54,20 +63,53 @@ public class OrderServicesImpl implements OrderServices {
         return new ResponseEntity<>(order.get(), HttpStatus.OK);
     }
 
+    @Transactional
     @Override
     public ResponseEntity<String> addOrder(OrderDTO orderDTO) {
         Order1 order=createOrderIfNotExist(orderDTO);
-        for (OrderItemDTO orderItemDTO:orderDTO.getOrderItems()){
-            OrderItem orderItem=new OrderItem();
-//            add saga pattern
-            orderItem.setProduct(orderItem.getProduct());
-            orderItem.setQuantity(orderItem.getQuantity());
-            orderItem.setOrder(order);
-            orderItemReository.save(orderItem);
+
+        //adding saga Pattern
+        try {
+
+            if(!checkingandReducingProductStock(orderDTO))return new ResponseEntity<>("Product Out of Stock",HttpStatus.OK);
+            if(!makePayment())return new ResponseEntity<>("Cannot make Payment!",HttpStatus.OK);
+            for (OrderItemDTO orderItemDTO:orderDTO.getOrderItems()){
+                OrderItem orderItem=new OrderItem();
+                orderItem.setProduct(orderItemDTO.getProduct());
+                orderItem.setQuantity(orderItemDTO.getQuantity());
+                orderItem.setOrder(order);
+                orderItemReository.save(orderItem);
+            }
+            return new ResponseEntity<>("Order Placed Succesfully!", HttpStatus.OK);
+
+        }catch (Exception e){
+            //remove from stock list;
+            restoreStock(orderDTO.getOrderItems());
+            return new ResponseEntity<>("Cannot Place Order",HttpStatus.OK);
         }
-        return new ResponseEntity<>("Order Placed Succesfully!", HttpStatus.OK);
+
+
     }
 
+    private boolean makePayment(){
+//        if(paymentInterface.makePayment())
+        return true;
+    }
+
+    private void restoreStock(List<OrderItemDTO> orderItemDTO){
+        productInterface.restoreStock(getReduceItemList(orderItemDTO));
+    }
+    private boolean checkingandReducingProductStock(OrderDTO orderDTO){
+        return  productInterface.reduceItemOrder(getReduceItemList(orderDTO.getOrderItems())).getBody();
+    }
+
+    private List<ReduceItemOrderedDTO> getReduceItemList(List<OrderItemDTO> orderItemDTOS){
+        List<ReduceItemOrderedDTO> reduceItemOrderedDTOList=new ArrayList<>();
+        for (OrderItemDTO orderItemDTO:orderItemDTOS){
+            reduceItemOrderedDTOList.add(new ReduceItemOrderedDTO(orderItemDTO.getProduct(),orderItemDTO.getQuantity()));
+        }
+        return reduceItemOrderedDTOList;
+    }
     private Order1 createOrderIfNotExist(OrderDTO orderDTO){
         Optional<Boolean> hasOrder=orderRepository.findByCustomerId(orderDTO.getCustomer());
         if(hasOrder.isEmpty() || !hasOrder.get()){
@@ -82,15 +124,34 @@ public class OrderServicesImpl implements OrderServices {
         }
     }
 
+
     @Override
     public ResponseEntity<String> deleteOrder(int id) {
         Optional<Order1> order = orderRepository.findById(id);
         if (order.isEmpty()) throw new IllegalArgumentException("Order Not Found!");
-//        add Saga
 
-        orderRepository.deleteById(id);
+//        add Saga
+        try{
+            getReduceItemOrderDTOByOrderId(id);
+            orderRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+
         return new ResponseEntity<>("Order Deleted Successfully!", HttpStatus.OK);
 
+    }
+
+    private void getReduceItemOrderDTOByOrderId(int orderId){
+        Optional<List<OrderItem>> orderItems=orderItemReository.findByOrderId(orderId);
+        List<OrderItemDTO> orderItemDTOS=new ArrayList<>();
+        for (OrderItem orderItem:orderItems.get()){
+            OrderItemDTO orderItemDTO=new OrderItemDTO();
+            orderItemDTO.setProduct(orderItem.getProduct());
+            orderItemDTO.setQuantity(orderItem.getQuantity());
+        }
+        restoreStock(orderItemDTOS);
     }
 
     @Override
@@ -99,6 +160,7 @@ public class OrderServicesImpl implements OrderServices {
         if (order.isEmpty()) throw new IllegalArgumentException("Order Not Found!");
         Order1 updatedOrder = order.get();
         updatedOrder.setOrderStatus("Delivered");
+        getReduceItemOrderDTOByOrderId(id);
         orderRepository.save(updatedOrder);
         return new ResponseEntity<>(updatedOrder, HttpStatus.OK);
     }

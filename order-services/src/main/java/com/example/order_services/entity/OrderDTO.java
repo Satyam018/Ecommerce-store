@@ -17,6 +17,7 @@ public class OrderDTO {
     private int customer;
     private int address;
     private List<OrderItemDTO> orderItems;
+//    private List<Integer> orderItemsId;
 
     public List<OrderItemDTO> getOrderItems() {
         return orderItems;

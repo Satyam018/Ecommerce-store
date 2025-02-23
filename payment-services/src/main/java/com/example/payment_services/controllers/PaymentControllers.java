@@ -18,7 +18,7 @@ public class PaymentControllers {
 
 
     @PostMapping("makepayment")
-    public ResponseEntity<Payment> makePayment(@RequestBody PaymentRequestDTO paymentRequestDTO){
+    public ResponseEntity<Boolean> makePayment(@RequestBody PaymentRequestDTO paymentRequestDTO){
         return paymentServices.makePayment(paymentRequestDTO);
     }
 

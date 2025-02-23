@@ -18,14 +18,14 @@ public class PaymentServiceImpl implements  PaymentServices{
     PaymentRepository paymentRepository;
 
     @Override
-    public ResponseEntity<Payment> makePayment(PaymentRequestDTO paymentRequestDTO) {
+    public ResponseEntity<Boolean> makePayment(PaymentRequestDTO paymentRequestDTO) {
         Payment payment=new Payment();
         payment.setPaymentStatus("Success");
         payment.setAmount(payment.getAmount());
         payment.setOrderId(paymentRequestDTO.getOrderId());
 
         paymentRepository.save(payment);
-        return new ResponseEntity<>(payment, HttpStatus.OK);
+        return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
     @Override

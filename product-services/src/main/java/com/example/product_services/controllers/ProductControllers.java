@@ -3,6 +3,7 @@ package com.example.product_services.controllers;
 
 import com.example.product_services.entity.Product;
 import com.example.product_services.entity.ProductDTO;
+import com.example.product_services.entity.ReduceItemOrderedDTO;
 import com.example.product_services.services.ProductServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +33,16 @@ public class ProductControllers {
     @GetMapping("{id}")
     public ResponseEntity<Product> getProductById(@PathVariable Integer id){
         return productServices.getProductById(id);
+    }
+
+    @PostMapping("reduceitemorder")
+    public ResponseEntity<Boolean> reduceItemOrder(@RequestBody List<ReduceItemOrderedDTO> reduceItemOrderedDTO){
+        return productServices.reduceItemOrder(reduceItemOrderedDTO);
+    }
+
+    @PostMapping("restoreStock")
+    public ResponseEntity<String> restoreStock(@RequestBody List<ReduceItemOrderedDTO> reduceItemOrderedDTO){
+        return productServices.restoreStock(reduceItemOrderedDTO);
     }
 
     @PostMapping("add")
