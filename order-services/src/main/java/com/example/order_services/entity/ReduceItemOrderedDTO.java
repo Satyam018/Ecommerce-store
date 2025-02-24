@@ -14,6 +14,11 @@ public class ReduceItemOrderedDTO {
     int productId;
     int quantity;
 
+    public ReduceItemOrderedDTO(int productId, int quantity) {
+        this.productId = productId;
+        this.quantity = quantity;
+    }
+
     public int getProductId() {
         return productId;
     }
