@@ -13,8 +13,7 @@ public class CustomerDTO {
 
     private String firstName;
     private String lastName;
-    private String email;
-    private String password;
+    private int userId;
     private String phoneNo;
 
     public String getFirstName() {
@@ -33,20 +32,12 @@ public class CustomerDTO {
         this.lastName = lastName;
     }
 
-    public String getEmail() {
-        return email;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getPhoneNo() {

@@ -21,10 +21,10 @@ public class Customer {
     private int id;
     private String first_name;
     private String last_name;
-    private String email;
-    private String phoneNo;
-    private String password;
 
+
+    private int userId;
+    private String phoneNo;
     @CreationTimestamp
     private Date createdOn;
 
@@ -52,13 +52,7 @@ public class Customer {
         this.last_name = last_name;
     }
 
-    public String getEmail() {
-        return email;
-    }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     public Date getCreatedOn() {
         return createdOn;
@@ -68,12 +62,12 @@ public class Customer {
         this.createdOn = createdOn;
     }
 
-    public String getPassword() {
-        return password;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getPhoneNo() {

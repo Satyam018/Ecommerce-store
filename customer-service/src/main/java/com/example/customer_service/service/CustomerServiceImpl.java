@@ -45,9 +45,8 @@ public class CustomerServiceImpl implements CustomerService{
         Customer customer=new Customer();
         customer.setFirst_name(customerDTO.getFirstName());
         customer.setLast_name(customerDTO.getLastName());
-        customer.setEmail(customerDTO.getEmail());
-        customer.setPassword(customerDTO.getPassword());
-        customer.setPhoneNo(customerDTO.getPhoneNo());
+        customer.setUserId(customerDTO.getUserId());
+        customer.setPhoneNo(customer.getPhoneNo());
         customerRepository.save(customer);
         return new ResponseEntity<>("Customer added Successfully!",HttpStatus.OK);
     }
@@ -60,8 +59,7 @@ public class CustomerServiceImpl implements CustomerService{
         System.out.println(customerDTO.getFirstName()+" "+customerDTO.getLastName());
         if(customerDTO.getFirstName()!=null && customerDTO.getFirstName().isEmpty())updatedCustomer.setFirst_name(customerDTO.getFirstName());
         if(customerDTO.getLastName()!=null && !customerDTO.getLastName().isEmpty())updatedCustomer.setLast_name(customerDTO.getLastName());
-        if(customerDTO.getEmail()!=null && !customerDTO.getEmail().isEmpty())updatedCustomer.setEmail(customerDTO.getEmail());
-        if(customerDTO.getPassword()!=null && !customerDTO.getPassword().isEmpty())updatedCustomer.setPassword(customerDTO.getPassword());
+        if(customerDTO.getPhoneNo()!=null && !customerDTO.getPhoneNo().isEmpty())updatedCustomer.setPhoneNo(customerDTO.getPhoneNo());
         if(customerDTO.getPhoneNo()!=null && !customerDTO.getPhoneNo().isEmpty())updatedCustomer.setPhoneNo(customerDTO.getPhoneNo());
 
         customerRepository.save(updatedCustomer);
