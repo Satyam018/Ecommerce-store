@@ -35,11 +35,11 @@ public class AuthController {
        else throw new IllegalArgumentException("User is not registerted!");
     }
 
-    @GetMapping("/validate")
-    public String validateToken(@RequestParam("token") String token){
-         authService.validateToken(token);
-         return "Token is Valid!";
-    }
+//    @GetMapping("/validate")
+//    public String validateToken(@RequestParam("token") String token){
+//         authService.validateToken(token);
+//         return "Token is Valid!";
+//    }
 
 
 

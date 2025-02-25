@@ -1,4 +1,4 @@
-package com.example.auth_services.service;
+package com.example.api_gateway.filter;
 
 
 import io.jsonwebtoken.Claims;
@@ -23,23 +23,13 @@ public class JWTService {
     @Value("${jwt.secret}")
     private  String SECRET;
 
-    public String generateToken(String userEmail){
-        Map<String, Object> claims=new HashMap<>();
-        return createToken(claims,userEmail);
-    }
 
-    public void validateToken(String token){
+    public boolean validateToken(String token){
         Jws<Claims> claimsJws=Jwts.parserBuilder().setSigningKey(getSignKey()).build().parseClaimsJws(token);
+        return true;
     }
 
-    private String createToken(Map<String, Object> claims, String userEmail) {
-        return Jwts.builder()
-                .setClaims(claims)
-                .setSubject(userEmail)
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis()+1000*60*60))
-                .signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
-    }
+
 
     private Key getSignKey(){
         byte[] keyBytes= Decoders.BASE64.decode(SECRET);
