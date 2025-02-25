@@ -33,12 +33,12 @@ public class CustomerController {
         return customerService.hasCustomer(id);
     }
 
-    @PutMapping("add")
+    @PostMapping("add")
     public ResponseEntity<String> addNewCustomer(@RequestBody CustomerDTO customerDTO){
         return customerService.addCustomer(customerDTO);
     }
 
-    @PutMapping("update/{id}")
+    @PostMapping("update/{id}")
     public ResponseEntity<Customer> addCustomer(@PathVariable int id,@RequestBody CustomerDTO customerDTO){
         return customerService.updateCustomer(id,customerDTO);
     }
