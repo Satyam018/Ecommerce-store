@@ -18,6 +18,7 @@ public class RouteValidator {
 
     public boolean isSecured(ServerHttpRequest request){
         String requestPath=request.getURI().getPath();
+        System.out.println("Request path: " + requestPath);  // Log request path
         for (String uri:OPEN_END_POINT){
             if(requestPath.contains(uri))return false;
         }

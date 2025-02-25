@@ -1,7 +1,7 @@
 package com.example.auth_services.controllers;
 
 
-import com.example.auth_services.entity.User;
+import com.example.auth_services.entity.AddUserDTO;
 import com.example.auth_services.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
@@ -22,16 +22,16 @@ public class AuthController {
     AuthenticationManager authenticationManager;
 
     @PostMapping("/register")
-    public ResponseEntity<String> addNewUser(@RequestBody User user){
+    public ResponseEntity<String> addNewUser(@RequestBody AddUserDTO addUserDTO){
 
-        return authService.addUser(user);
+        return authService.addUser(addUserDTO);
     }
 
 
     @PostMapping("/token")
-    public String getToken(@RequestBody User user){
-        Authentication authentication=authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(),user.getPassword()));
-       if(authentication.isAuthenticated()) return authService.generateToken(user.getEmail());
+    public String getToken(@RequestBody AddUserDTO addUserDTO){
+        Authentication authentication=authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(addUserDTO.getEmail(),addUserDTO.getPassword()));
+       if(authentication.isAuthenticated()) return authService.generateToken(addUserDTO.getEmail());
        else throw new IllegalArgumentException("User is not registerted!");
     }
 

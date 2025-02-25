@@ -3,7 +3,7 @@ package com.example.auth_services.service;
 
 import com.example.auth_services.config.CustomUserDetails;
 import com.example.auth_services.dao.UserRepository;
-import com.example.auth_services.entity.User;
+import com.example.auth_services.entity.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,7 +20,7 @@ public class CustomerUserDetailsService implements UserDetailsService {
     UserRepository userRepository;
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Optional<User> user=userRepository.findByEmail(email);
+        Optional<Users> user=userRepository.findByEmail(email);
         if(user.isEmpty()) throw new UsernameNotFoundException("User Not FOund!");
         return new CustomUserDetails(user.get().getEmail(),user.get().getPassword());
     }
