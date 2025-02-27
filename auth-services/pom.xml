@@ -106,6 +106,7 @@
 	</dependencyManagement>
 
 	<build>
+		<finalName>auth-services</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

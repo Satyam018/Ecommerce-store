@@ -4,7 +4,7 @@ package com.example.payment_services.controllers;
 import com.example.payment_services.entity.Payment;
 import com.example.payment_services.entity.PaymentRequestDTO;
 import com.example.payment_services.services.PaymentServices;
-import jakarta.ws.rs.Path;
+//import jakarta.ws.rs.Path;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

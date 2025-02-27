@@ -1,0 +1,148 @@
+version: "3.7"
+
+
+services:
+  server-registry:
+    build: ./server-registry
+    ports:
+      - "8761:8761"
+    networks:
+      - my-networks
+
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "8060:8060"
+    networks:
+      - my-networks
+
+
+
+  customer-service:
+    build: ./customer-service
+    depends_on:
+      - server-registry
+    ports:
+      - "8080:8080"
+    networks:
+      -   my-networks
+
+  payment-service:
+    build: ./payment-services
+    depends_on:
+      - server-registry
+    ports:
+      - "8085:8085"
+    networks:
+      - my-networks
+
+  auth-services:
+    build: ./auth-services
+    depends_on:
+      - server-registry
+    ports:
+      - "8086:8086"
+    networks:
+      - my-networks
+
+  product-services:
+    build: ./product-services
+    depends_on:
+      - server-registry
+    ports:
+      - "8081:8081"
+    networks:
+      - my-networks
+
+  order-services:
+    build: ./order-services
+    depends_on:
+      - server-registry
+    ports:
+      - "8084:8084"
+    networks:
+      - my-networks
+
+  cart-services:
+    build: ./cart-services
+    depends_on:
+      - server-registry
+    ports:
+      - "8083:8083"
+    networks:
+      - my-networks
+
+
+
+  customerdb:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: satyam
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: customerdb
+    ports:
+      - 5433:5432
+    networks:
+      - my-networks
+
+
+  productdb:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: satyam
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: productdb
+    ports:
+      - 5436:5432
+    networks:
+      - my-networks
+
+  cartdb:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: satyam
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: cartdb
+    ports:
+      - 5437:5432
+    networks:
+      - my-networks
+
+  paymentdb:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: satyam
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: paymentdb
+    ports:
+      - 5434:5432
+    networks:
+      - my-networks
+
+  orderdb:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: satyam
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: orderdb
+    ports:
+      - 5438:5432
+    networks:
+      - my-networks
+
+  userdb:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: satyam
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: userdb
+    ports:
+      - 5435:5432
+    networks:
+      - my-networks
+
+
+networks:
+  my-networks:
+    driver: bridge
+
