@@ -1,2 +1,3 @@
-# Ecommerce-store
-This is a backend ecommerce store
+# Microservices E-commerce Store Backend Application
+
+## Architecture OverView
