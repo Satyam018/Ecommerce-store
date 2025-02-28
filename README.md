@@ -38,12 +38,12 @@ This is a backend REST API for e-commerce store.
 
 The architecture includes several services connected to their own database. It has has an API gateway which is the entry point for the users. All of them are registered them to eureka server registry. 
 
-![App Screenshot](https://drive.google.com/file/d/1rSs5xMKr3j8jBa8AWIesnyqHaEstmGDF/view?usp=drive_link)
+![Image](https://github.com/user-attachments/assets/d18ea1b1-4974-478b-b43b-e5d71e020f62)
 
 
 The API gateway send the request to the different services based on the request made by the users.
 
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+![Image](https://github.com/user-attachments/assets/705d3201-4ec7-4150-a74c-e3456bebccfb)
 
 The API gateway send the request to the different services based on the request made by the users.
 
