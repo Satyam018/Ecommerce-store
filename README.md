@@ -36,20 +36,20 @@ This is a backend REST API for e-commerce store.
 
 ## Solution Architecture
 
-The architecture includes several services connected to their own database. It has has an API gateway which is the entry point for the users. All of them are registered them to eureka server registry. 
+The architecture includes several services connected to their own database. It  has an API gateway which is the entry point for the users. All of them are registered to the Eureka server registry. 
 
-![Image](https://github.com/user-attachments/assets/d18ea1b1-4974-478b-b43b-e5d71e020f62)
+![Image](https://github.com/user-attachments/assets/8d496aa8-58fb-4911-aa1d-80de1a4f80f7)
 
 
-The API gateway send the request to the different services based on the request made by the users.
+The API gateway sends the request to the different services based on the request made by the users.
 
-![Image](https://github.com/user-attachments/assets/705d3201-4ec7-4150-a74c-e3456bebccfb)
+![Image](https://github.com/user-attachments/assets/82d0a74f-788d-4bb6-abe6-45c85685e49a)
 
-The API gateway send the request to the different services based on the request made by the users.
 
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+The Communication between services takes place with the help Open Feign Library. I have used the Coreography SAGA Pattern to ensure data consistency.
 
-The Communciation between services takes place with the help OpenFign Library. I have use Coreography SAGA Pattern to ensure data consistency.
+
+![Image](https://github.com/user-attachments/assets/04df9e36-4f90-429b-bfd4-8361c051669a)
 
 ## Services
 
@@ -85,11 +85,11 @@ The Communciation between services takes place with the help OpenFign Library. I
 2. **Create Build Files for All Services**
 Each service requires a build file (e.g., Dockerfile, build configuration). Ensure you have the necessary build files set up for each service in your project.
 
-3. **Navigate to the ecommerce-store Directory**
-Once you've prepared the build files, navigate to the ecommerce-store directory:
+3. **Navigate to the e-commerce-store Directory**
+Once you've prepared the build files, navigate to the e-commerce-store directory:
 
     
-        cd ecommerce-store
+        cd Ecommerce-store
 
 
 4. **Run Docker Compose**
